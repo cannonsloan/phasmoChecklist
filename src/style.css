@@ -1,0 +1,35 @@
+button {
+    background-color: #ffffff;
+    border: 1px solid black;
+
+    color: #3e1313;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+
+    font-size: 14px;
+
+    display: grid;
+    margin: auto;
+}
+
+#ghosts {
+    font-size: 22px;
+
+    display: grid;
+    margin: auto;
+    text-align: center;
+}
+
+#title {
+    font-size: 22px;
+
+    display: grid;
+    margin: auto;
+    text-align: center;
+}
+
+body {
+    background-color: black;
+    color: white;
+}
