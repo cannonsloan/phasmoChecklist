@@ -65,7 +65,17 @@ let yurei = {
   traits: [evidence[2], evidence[3], evidence[4]]
 }
 
-let ghosts = [banshee, demon, jinn, mare, oni, phantom, poltergeist, revenant, shade, spirit, wraith, yurei]
+let hantu = {
+  name: "Hantu",
+  traits: [evidence[1], evidence[3], evidence[4]]
+}
+
+let yokai = {
+  name: "Yokai",
+  traits: [evidence[5], evidence[3], evidence[4]]
+}
+
+let ghosts = [banshee, demon, jinn, mare, oni, phantom, poltergeist, revenant, shade, spirit, wraith, yurei, hantu, yokai]
 
 // Take evidence array of 0 to 3 objects, return possibilities
 function findPossibleGhosts(recordedEvidenceArray) {
