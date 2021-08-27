@@ -1,4 +1,4 @@
-let evidence = ["EMF Level 5", "Fingerprints", "Freezing Temperatures", "Ghost Orb", "Ghost Writing", "Spirit Box"]
+let evidence = ["EMF Level 5", "Freezing Temperatures", "Spirit Box", "Ghost Writing", "Ghost Orb", "Fingerprints", "DOTS Projector"]
 let recordedEvidence = []
 let impossibleColor = '#cc0000'
 let inactiveColor = 'white'
@@ -7,65 +7,75 @@ let activeColor = '#3CB371'
 
 let banshee = {
   name: "Banshee",
-  traits: [evidence[0], evidence[1], evidence[2]]
+  traits: [evidence[4], evidence[5], evidence[6]]
 }
 
 let demon = {
   name: "Demon",
-  traits: [evidence[2], evidence[4], evidence[5]]
+  traits: [evidence[1], evidence[3], evidence[5]]
 }
 
 let jinn = {
   name: "Jinn",
-  traits: [evidence[0], evidence[3], evidence[5]]
+  traits: [evidence[0], evidence[1], evidence[5]]
 }
 
 let mare = {
   name: "Mare",
-  traits: [evidence[2], evidence[3], evidence[5]]
+  traits: [evidence[2], evidence[3], evidence[4]]
 }
 
 let oni = {
   name: "Oni",
-  traits: [evidence[0], evidence[4], evidence[5]]
+  traits: [evidence[0], evidence[1], evidence[6]]
 }
 
 let phantom = {
   name: "Phantom",
-  traits: [evidence[0], evidence[2], evidence[3]]
+  traits: [evidence[2], evidence[5], evidence[6]]
 }
 
 let poltergeist = {
   name: "Poltergeist",
-  traits: [evidence[1], evidence[3], evidence[5]]
+  traits: [evidence[2], evidence[3], evidence[5]]
 }
 
 let revenant = {
   name: "Revenant",
-  traits: [evidence[0], evidence[1], evidence[4]]
+  traits: [evidence[1], evidence[3], evidence[4]]
 }
 
 let shade = {
   name: "Shade",
-  traits: [evidence[0], evidence[3], evidence[4]]
+  traits: [evidence[0], evidence[1], evidence[3]]
 }
 
 let spirit = {
   name: "Spirit",
-  traits: [evidence[1], evidence[4], evidence[5]]
+  traits: [evidence[0], evidence[2], evidence[3]]
 }
 
 let wraith = {
   name: "Wraith",
-  traits: [evidence[1], evidence[2], evidence[5]]
+  traits: [evidence[0], evidence[2], evidence[6]]
 }
 
 let yurei = {
   name: "Yurei",
-  traits: [evidence[2], evidence[3], evidence[4]]
+  traits: [evidence[1], evidence[4], evidence[6]]
 }
 
-let ghosts = [banshee, demon, jinn, mare, oni, phantom, poltergeist, revenant, shade, spirit, wraith, yurei]
+let goryo = {
+  name: "Goryo",
+  traits: [evidence[0], evidence[5], evidence[6]]
+}
+
+let myling = {
+  name: "Myling",
+  traits: [evidence[0], evidence[3], evidence[5]]
+}
+
+let ghosts = [banshee, demon, jinn, mare, oni, phantom, poltergeist, revenant, shade, spirit, wraith, yurei, goryo, myling]
 
 // Take evidence array of 0 to 3 objects, return possibilities
 function findPossibleGhosts(recordedEvidenceArray) {
@@ -124,7 +134,7 @@ function toggleEvidence(givenEvidence) {
   // find the remaining possible evidence
   let remaining = findPossibleEvidence(possible)
   // take evidence - remaining and turn the results red (not possible evidence)
-  let impossibleEvidence = evidence.filter(x => !remaining.includes(x))
+  let impossibleEvidence = evidence.filter(x => !remaining.includes(x)) //takes all evidence minus possible
   impossibleEvidence.forEach(impossible => {
     let impossibleButton = document.getElementById(impossible)
     impossibleButton.style.backgroundColor = 'red'
