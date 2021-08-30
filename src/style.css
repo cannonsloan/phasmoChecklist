@@ -29,6 +29,14 @@ button {
     text-align: center;
 }
 
+#version {
+    font-size: 22px;
+
+    display: grid;
+    margin: auto;
+    text-align: center;
+}
+
 body {
     background-color: black;
     color: white;

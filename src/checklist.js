@@ -114,6 +114,7 @@ function findPossibleGhosts(recordedEvidenceArray) {
 // return possible evidences given an array of ghosts
 function findPossibleEvidence(ghostArray) {
   let possibleEvidence = []
+  // generate list of ghost objects from their names
   ghostArray.forEach(ghost => {
     let ghostObject = ''
     ghosts.forEach(ghostObj => {
