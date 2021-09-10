@@ -13,14 +13,6 @@ button {
     margin: auto;
 }
 
-#ghosts {
-    font-size: 22px;
-
-    display: grid;
-    margin: auto;
-    text-align: center;
-}
-
 #title {
     font-size: 22px;
 
@@ -40,4 +32,18 @@ button {
 body {
     background-color: black;
     color: white;
+}
+
+#GhostTable, th, td {
+    font-size: 18px;
+
+    border: 1px solid white;
+    margin: auto;
+    text-align: center;
+}
+
+#Reset {
+    position:absolute;
+    top:0;
+    right:0;
 }

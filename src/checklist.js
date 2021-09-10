@@ -7,82 +7,98 @@ let activeColor = '#3CB371'
 
 let banshee = {
   name: "Banshee",
-  traits: [evidence[4], evidence[5], evidence[6]]
+  traits: [evidence[4], evidence[5], evidence[6]],
+  count: 0
 }
 
 let demon = {
   name: "Demon",
-  traits: [evidence[1], evidence[3], evidence[5]]
+  traits: [evidence[1], evidence[3], evidence[5]],
+  count: 0
 }
 
 let jinn = {
   name: "Jinn",
-  traits: [evidence[0], evidence[1], evidence[5]]
+  traits: [evidence[0], evidence[1], evidence[5]],
+  count: 0
 }
 
 let mare = {
   name: "Mare",
-  traits: [evidence[2], evidence[3], evidence[4]]
+  traits: [evidence[2], evidence[3], evidence[4]],
+  count: 0
 }
 
 let oni = {
   name: "Oni",
-  traits: [evidence[0], evidence[1], evidence[6]]
+  traits: [evidence[0], evidence[1], evidence[6]],
+  count: 0
 }
 
 let phantom = {
   name: "Phantom",
-  traits: [evidence[2], evidence[5], evidence[6]]
+  traits: [evidence[2], evidence[5], evidence[6]],
+  count: 0
 }
 
 let poltergeist = {
   name: "Poltergeist",
-  traits: [evidence[2], evidence[3], evidence[5]]
+  traits: [evidence[2], evidence[3], evidence[5]],
+  count: 0
 }
 
 let revenant = {
   name: "Revenant",
-  traits: [evidence[1], evidence[3], evidence[4]]
+  traits: [evidence[1], evidence[3], evidence[4]],
+  count: 0
 }
 
 let shade = {
   name: "Shade",
-  traits: [evidence[0], evidence[1], evidence[3]]
+  traits: [evidence[0], evidence[1], evidence[3]],
+  count: 0
 }
 
 let spirit = {
   name: "Spirit",
-  traits: [evidence[0], evidence[2], evidence[3]]
+  traits: [evidence[0], evidence[2], evidence[3]],
+  count: 0
 }
 
 let wraith = {
   name: "Wraith",
-  traits: [evidence[0], evidence[2], evidence[6]]
+  traits: [evidence[0], evidence[2], evidence[6]],
+  count: 0
 }
 
 let yurei = {
   name: "Yurei",
-  traits: [evidence[1], evidence[4], evidence[6]]
+  traits: [evidence[1], evidence[4], evidence[6]],
+  count: 0
 }
 
 let hantu = {
   name: "Hantu",
-  traits: [evidence[1], evidence[4], evidence[5]]
+  traits: [evidence[1], evidence[4], evidence[5]],
+  count: 0
 }
 
 let yokai = {
   name: "Yokai",
-  traits: [evidence[2], evidence[4], evidence[6]]
+  traits: [evidence[2], evidence[4], evidence[6]],
+  count: 0
 }
 
 let goryo = {
   name: "Goryo",
-  traits: [evidence[0], evidence[5], evidence[6]]
+  traits: [evidence[0], evidence[5], evidence[6]],
+  count: 0
 }
 
 let myling = {
   name: "Myling",
-  traits: [evidence[0], evidence[3], evidence[5]]
+  traits: [evidence[0], evidence[3], evidence[5]],
+  count: 0
 }
 
 let ghosts = [banshee, demon, jinn, mare, oni, phantom, poltergeist, revenant, shade, spirit, wraith, yurei, hantu, yokai, goryo, myling]
@@ -137,6 +153,10 @@ function toggleEvidence(givenEvidence) {
   if (recordedEvidence.includes(givenEvidence)) {
     recordedEvidence.splice(recordedEvidence.indexOf(givenEvidence), 1)
     button.style.backgroundColor = 'white'
+    // if confirm button exists, delete it
+    if (document.getElementById("Confirm") != null) {
+      document.getElementById("Confirm").remove()
+    }
   }
   else if (recordedEvidence.length < 3 && button.style.backgroundColor !== 'red'){
     recordedEvidence.push(givenEvidence)
@@ -158,9 +178,121 @@ function toggleEvidence(givenEvidence) {
       remButton.style.backgroundColor = 'white'
     }
   })
-  document.getElementById('possibleGhosts').innerHTML = possible.join(', ')
+  // subtract possible ghosts from ghost list to get IMPOSSIBLE GHOSTS
+  let allGhosts = []
+  ghosts.forEach(ghost => {
+    allGhosts.push(ghost.name)
+  })
+  let impossibleGhosts = allGhosts.filter(x => !possible.includes(x))
+  // set all IMPOSSIBLE GHOSTS to red on table header and leave others white
+  allGhosts.forEach(ghost => {
+    let ghostHeader = document.getElementById(ghost + "Header")
+    ghostHeader.style.color = 'white'
+  })
+  impossibleGhosts.forEach(impossibleGhost => {
+    let ghostHeader = document.getElementById(impossibleGhost + "Header")
+    ghostHeader.style.color = 'red'
+  })
+  // if 3 evidence selected create confirm button if no confirm button exists
+  if (recordedEvidence.length === 3 && document.getElementById("Confirm") == null) {
+    finalGhost = possible[0]
+    let btn = document.createElement("button")
+    btn.id = "Confirm"
+    btn.onclick = function() {
+      confirmGhost(finalGhost)
+    }
+    btn.innerHTML = "Confirm " + finalGhost
+    document.body.appendChild(btn)
+  }
 }
 
+// confirm the ghost, update count, save, reset environment
+function confirmGhost(ghostType) {
+  let ghostObj = 0
+  let btn = document.getElementById("Confirm")
+  ghosts.forEach(ghost => {
+    if (ghost.name === ghostType) {
+      ghostObj = ghost
+    }
+  })
+  ghostObj.count++
+  saveCount()
+  updateCount()
+  btn.remove()
+  toggleEvidence(recordedEvidence[0])
+  toggleEvidence(recordedEvidence[0])
+  toggleEvidence(recordedEvidence[0])
+}
+
+// create html table of ghosts and caught amount
+function createTable() {
+  let table = document.querySelector("table")
+  let thead = table.createTHead()
+  let ghostNameRow = thead.insertRow()
+  let ghostCaughtRow = thead.insertRow()
+  let i = 0
+  ghosts.forEach(ghostType => {
+    // extract data
+    ghostNameText = ghostType.name
+    ghostCaughtText = ghostType.count
+    i++
+    // generate table header
+    let th = document.createElement("th")
+    let text = document.createTextNode(ghostNameText)
+    th.appendChild(text)
+    th.setAttribute("id", ghostNameText + "Header")
+    ghostNameRow.appendChild(th)
+    // generate table body
+    let td = document.createElement("td")
+    text = document.createTextNode(ghostCaughtText)
+    td.appendChild(text)
+    td.setAttribute("id", ghostNameText + "Count")
+    ghostCaughtRow.appendChild(td)
+  })
+}
+
+// save ghostsCaught to storage
+function saveCount() {
+  ghostsCaught = []
+  ghosts.forEach(ghost => {
+    ghostsCaught.push(ghost.count)
+  })
+  localStorage.setItem('phasmoChecklistCount', JSON.stringify(ghostsCaught))
+}
+
+// load ghostsCaught from storage
+function loadCount() {
+  if (localStorage.getItem('phasmoChecklistCount')) {
+    ghostsCaught = JSON.parse(localStorage.getItem('phasmoChecklistCount'))
+    let i = 0
+    ghostsCaught.forEach(entry => {
+      ghosts[i].count = entry
+      updateCount()
+      i++
+    })
+  }
+}
+
+// update html data with ghost count
+function updateCount() {
+  ghosts.forEach(ghost => {
+    let ghostCount = document.getElementById(ghost.name + "Count")
+    ghostCount.innerHTML = ghost.count
+  })
+}
+
+// reset saved data
+function resetCount() {
+  ghosts.forEach(ghost => {
+    ghost.count = 0
+  })
+  saveCount()
+  updateCount()
+}
+
+// startup functions
+createTable()
+loadCount()
 
 // TESTS //
 /*
