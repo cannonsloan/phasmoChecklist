@@ -51,3 +51,13 @@ body {
     top:0;
     right:0;
 }
+
+#Directions {
+    font-size: 18px;
+
+    position: absolute;
+    left: 50%;
+    bottom: 0px;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%)
+}

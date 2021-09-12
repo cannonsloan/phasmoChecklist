@@ -1,9 +1,6 @@
 let evidence = ["EMF Level 5", "Freezing Temperatures", "Spirit Box", "Ghost Writing", "Ghost Orb", "Fingerprints", "DOTS Projector"]
 let recordedEvidence = []
-let impossibleColor = '#cc0000'
-let inactiveColor = 'white'
-let activeColor = '#3CB371'
-
+let canceledEvidence = []
 
 let banshee = {
   name: "Banshee",
@@ -127,6 +124,28 @@ function findPossibleGhosts(recordedEvidenceArray) {
   return possibleGhosts
 }
 
+// Take canceled evidence to get impossible ghosts
+function findImpossibleGhosts(canceledEvidenceArray) {
+  let impossibleGhosts = []
+  ghosts.forEach(ghost => {
+    let truthArray = []
+    // if ONE element of imp are in ghost, add to list
+    canceledEvidenceArray.forEach(element => {
+      // if is in ghost traits append a true
+      if (ghost.traits.indexOf(element) >= 0) {
+        truthArray.push(true)
+      } else {
+        truthArray.push(false)
+      }
+    })
+    // if ONE elements of truthSet is true
+    if (truthArray.includes(true)) {
+      impossibleGhosts.push(ghost.name)
+    }
+  })
+  return impossibleGhosts
+}
+
 // return possible evidences given an array of ghosts
 function findPossibleEvidence(ghostArray) {
   let possibleEvidence = []
@@ -148,9 +167,10 @@ function findPossibleEvidence(ghostArray) {
 }
 
 // if evidence in array, remove it. if it isn't, add it
-function toggleEvidence(givenEvidence) {
+// TODO: right mouse button click to disable evidence
+function toggleEvidence(givenEvidence, buttonpress) {
   let button = document.getElementById(givenEvidence)
-  if (recordedEvidence.includes(givenEvidence)) {
+  if (recordedEvidence.includes(givenEvidence) && buttonpress === 'left') {
     recordedEvidence.splice(recordedEvidence.indexOf(givenEvidence), 1)
     button.style.backgroundColor = 'white'
     // if confirm button exists, delete it
@@ -158,9 +178,20 @@ function toggleEvidence(givenEvidence) {
       document.getElementById("Confirm").remove()
     }
   }
-  else if (recordedEvidence.length < 3 && button.style.backgroundColor !== 'red'){
+  else if (buttonpress === 'left' && recordedEvidence.length < 3 && button.style.backgroundColor !== 'red'){
     recordedEvidence.push(givenEvidence)
+    if (button.style.backgroundColor === 'darkred') {
+      canceledEvidence.splice(canceledEvidence.indexOf(givenEvidence), 1)
+    }
     button.style.backgroundColor = 'green'
+  }
+  else if (buttonpress === 'right' && button.style.backgroundColor !== 'darkred' && button.style.backgroundColor !== 'green') {
+    canceledEvidence.push(givenEvidence)
+    button.style.backgroundColor = 'darkred'
+  }
+  else if (buttonpress === 'right' && button.style.backgroundColor === 'darkred' && button.style.backgroundColor !== 'green') {
+    canceledEvidence.splice(canceledEvidence.indexOf(givenEvidence), 1)
+    button.style.backgroundColor = 'white'
   }
   let possible = findPossibleGhosts(recordedEvidence)
   // find the remaining possible evidence
@@ -169,7 +200,9 @@ function toggleEvidence(givenEvidence) {
   let impossibleEvidence = evidence.filter(x => !remaining.includes(x)) //takes all evidence minus possible
   impossibleEvidence.forEach(impossible => {
     let impossibleButton = document.getElementById(impossible)
-    impossibleButton.style.backgroundColor = 'red'
+    if (impossibleButton.style.backgroundColor !== 'darkred') {
+      impossibleButton.style.backgroundColor = 'red'
+    } 
   })
   // if button is remaining and NOT white, set to white
   remaining.forEach(rem => {
@@ -183,13 +216,18 @@ function toggleEvidence(givenEvidence) {
   ghosts.forEach(ghost => {
     allGhosts.push(ghost.name)
   })
-  let impossibleGhosts = allGhosts.filter(x => !possible.includes(x))
+  let impossibleGhostsTest = findImpossibleGhosts(canceledEvidence)
+  let impossibleGhosts = allGhosts.filter(x => !possible.includes(x)) // all ghosts - possible ghosts
   // set all IMPOSSIBLE GHOSTS to red on table header and leave others white
   allGhosts.forEach(ghost => {
     let ghostHeader = document.getElementById(ghost + "Header")
     ghostHeader.style.color = 'white'
   })
   impossibleGhosts.forEach(impossibleGhost => {
+    let ghostHeader = document.getElementById(impossibleGhost + "Header")
+    ghostHeader.style.color = 'red'
+  })
+  impossibleGhostsTest.forEach(impossibleGhost => {
     let ghostHeader = document.getElementById(impossibleGhost + "Header")
     ghostHeader.style.color = 'red'
   })
@@ -219,9 +257,14 @@ function confirmGhost(ghostType) {
   saveCount()
   updateCount()
   btn.remove()
-  toggleEvidence(recordedEvidence[0])
-  toggleEvidence(recordedEvidence[0])
-  toggleEvidence(recordedEvidence[0])
+  let recLength = recordedEvidence.length
+  let canLength = canceledEvidence.length
+  for (let i = 0; i < recLength; i++) {
+    toggleEvidence(recordedEvidence[0], 'left')
+  }
+  for (let i = 0; i < canLength; i++) {
+    toggleEvidence(canceledEvidence[0], 'right')
+  }
 }
 
 // create html table of ghosts and caught amount

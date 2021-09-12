@@ -23,20 +23,20 @@
     <p>Phasmophobia Evidence Checklist</p>
   </div>
 
-  <div id="evidenceChecklist">
-    <button id="EMF Level 5" onclick="toggleEvidence('EMF Level 5')">EMF Level 5</button>
+  <div id="evidenceChecklist" oncontextmenu="return false;">
+    <button id="EMF Level 5" onclick="toggleEvidence('EMF Level 5', 'left')" oncontextmenu="toggleEvidence('EMF Level 5', 'right')">EMF Level 5</button>
     <br>
-    <button id="Fingerprints" onclick="toggleEvidence('Fingerprints')">Fingerprints</button>
+    <button id="Fingerprints" onclick="toggleEvidence('Fingerprints', 'left')" oncontextmenu="toggleEvidence('Fingerprints', 'right')">Fingerprints</button>
     <br>
-    <button id="Freezing Temperatures" onclick="toggleEvidence('Freezing Temperatures')">Freezing Temperatures</button>
+    <button id="Freezing Temperatures" onclick="toggleEvidence('Freezing Temperatures', 'left')" oncontextmenu="toggleEvidence('Freezing Temperatures', 'right')">Freezing Temperatures</button>
     <br>
-    <button id="Ghost Orb" onclick="toggleEvidence('Ghost Orb')">Ghost Orb</button>
+    <button id="Ghost Orb" onclick="toggleEvidence('Ghost Orb', 'left')" oncontextmenu="toggleEvidence('Ghost Orb', 'right')">Ghost Orb</button>
     <br>
-    <button id="Ghost Writing" onclick="toggleEvidence('Ghost Writing')">Ghost Writing</button>
+    <button id="Ghost Writing" onclick="toggleEvidence('Ghost Writing', 'left')" oncontextmenu="toggleEvidence('Ghost Writing', 'right')">Ghost Writing</button>
     <br>
-    <button id="Spirit Box" onclick="toggleEvidence('Spirit Box')">Spirit Box</button>
+    <button id="Spirit Box" onclick="toggleEvidence('Spirit Box', 'left')" oncontextmenu="toggleEvidence('Spirit Box', 'right')">Spirit Box</button>
     <br>
-    <button id="DOTS Projector" onclick="toggleEvidence('DOTS Projector')">DOTS Projector</button>
+    <button id="DOTS Projector" onclick="toggleEvidence('DOTS Projector', 'left')" oncontextmenu="toggleEvidence('DOTS Projector', 'right')">DOTS Projector</button>
   </div>
 
   <br>
@@ -47,6 +47,8 @@
   </table>
 
   <button id="Reset" onclick="resetCount()">Reset Data</button>
+  
+  <p id='Directions'>Left mouse click for logging evidence, right mouse click (or hold on mobile) to eliminate evidence</p>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="checklist.js"></script>
