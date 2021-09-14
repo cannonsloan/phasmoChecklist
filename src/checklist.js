@@ -167,7 +167,7 @@ function findPossibleEvidence(ghostArray) {
 }
 
 // if evidence in array, remove it. if it isn't, add it
-// TODO: right mouse button click to disable evidence
+// bug -> if impossible evidence is cancelled and then left clicked it breaks
 function toggleEvidence(givenEvidence, buttonpress) {
   let button = document.getElementById(givenEvidence)
   if (recordedEvidence.includes(givenEvidence) && buttonpress === 'left') {
@@ -185,11 +185,11 @@ function toggleEvidence(givenEvidence, buttonpress) {
     }
     button.style.backgroundColor = 'green'
   }
-  else if (buttonpress === 'right' && button.style.backgroundColor !== 'darkred' && button.style.backgroundColor !== 'green') {
+  else if (buttonpress === 'right' && button.style.backgroundColor !== 'darkred' && button.style.backgroundColor !== 'green' && button.style.backgroundColor !== 'red') {
     canceledEvidence.push(givenEvidence)
     button.style.backgroundColor = 'darkred'
   }
-  else if (buttonpress === 'right' && button.style.backgroundColor === 'darkred' && button.style.backgroundColor !== 'green') {
+  else if (buttonpress === 'right' && button.style.backgroundColor === 'darkred' && button.style.backgroundColor !== 'green' && button.style.backgroundColor !== 'red') {
     canceledEvidence.splice(canceledEvidence.indexOf(givenEvidence), 1)
     button.style.backgroundColor = 'white'
   }
