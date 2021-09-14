@@ -52,6 +52,12 @@ body {
     right:0;
 }
 
+#ResetEvidence {
+    position:absolute;
+    bottom:0;
+    right:0;
+}
+
 #Directions {
     font-size: 18px;
 

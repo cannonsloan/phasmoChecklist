@@ -333,6 +333,29 @@ function resetCount() {
   updateCount()
 }
 
+// reset logged evidence
+function resetEvidence() {
+  let recLength = recordedEvidence.length
+  let canLength = canceledEvidence.length
+  for (let i = 0; i < recLength; i++) {
+    toggleEvidence(recordedEvidence[0], 'left')
+  }
+  for (let i = 0; i < canLength; i++) {
+    toggleEvidence(canceledEvidence[0], 'right')
+  }
+  // reset evidence buttons
+  evidence.forEach(evidence => {
+    let evidenceButton = document.getElementById(evidence)
+    evidenceButton.style.backgroundColor = 'white'
+  })
+  // reset table headers
+  ghosts.forEach(ghost => {
+    // reset table headers
+    let ghostHeader = document.getElementById(ghost + "Header")
+    ghostHeader.style.color = 'white'
+  })
+}
+
 // startup functions
 createTable()
 loadCount()
