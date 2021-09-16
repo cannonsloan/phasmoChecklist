@@ -167,10 +167,10 @@ function findPossibleEvidence(ghostArray) {
 }
 
 // if evidence in array, remove it. if it isn't, add it
-// bug -> if impossible evidence is cancelled and then left clicked it breaks
+// needs tidying
 function toggleEvidence(givenEvidence, buttonpress) {
   let button = document.getElementById(givenEvidence)
-  if (recordedEvidence.includes(givenEvidence) && buttonpress === 'left') {
+  if (recordedEvidence.includes(givenEvidence) && buttonpress === 'left' && button.style.backgroundColor !== 'darkred') {
     recordedEvidence.splice(recordedEvidence.indexOf(givenEvidence), 1)
     button.style.backgroundColor = 'white'
     // if confirm button exists, delete it
@@ -178,7 +178,7 @@ function toggleEvidence(givenEvidence, buttonpress) {
       document.getElementById("Confirm").remove()
     }
   }
-  else if (buttonpress === 'left' && recordedEvidence.length < 3 && button.style.backgroundColor !== 'red'){
+  else if (buttonpress === 'left' && recordedEvidence.length < 3 && button.style.backgroundColor !== 'red' && button.style.backgroundColor !== 'darkred'){
     recordedEvidence.push(givenEvidence)
     if (button.style.backgroundColor === 'darkred') {
       canceledEvidence.splice(canceledEvidence.indexOf(givenEvidence), 1)
