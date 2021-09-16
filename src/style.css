@@ -67,3 +67,8 @@ body {
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%)
 }
+
+#TotalCount {
+    font-size: 22px;
+    text-align: center;
+}

@@ -316,12 +316,23 @@ function loadCount() {
   }
 }
 
+// get total ghost caught count
+function getTotalCount() {
+  let totalGhostCount = 0
+  ghosts.forEach(ghost => {
+    totalGhostCount += ghost.count
+  })
+  return totalGhostCount
+}
+
 // update html data with ghost count
 function updateCount() {
+  let totalGhostCount = document.getElementById("TotalCountText")
   ghosts.forEach(ghost => {
     let ghostCount = document.getElementById(ghost.name + "Count")
     ghostCount.innerHTML = ghost.count
   })
+  totalGhostCount.innerHTML = "Total Ghosts Caught: " + getTotalCount()
 }
 
 // reset saved data
