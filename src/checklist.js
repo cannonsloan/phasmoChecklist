@@ -368,8 +368,10 @@ function resetEvidence() {
 }
 
 // startup functions
-createTable()
-loadCount()
+window.onload = function() {
+  createTable()
+  loadCount()
+}
 
 // TESTS //
 /*
