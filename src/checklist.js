@@ -98,7 +98,31 @@ let myling = {
   count: 0
 }
 
-let ghosts = [banshee, demon, jinn, mare, oni, phantom, poltergeist, revenant, shade, spirit, wraith, yurei, hantu, yokai, goryo, myling]
+let obake = {
+  name: "Obake",
+  traits: [evidence[0], evidence[5], evidence[4]],
+  count: 0
+}
+
+let onryo = {
+  name: "Onryo",
+  traits: [evidence[1], evidence[4], evidence[2]],
+  count: 0  
+}
+
+let raiju = {
+  name: "Raiju",
+  traits: [evidence[6], evidence[0], evidence[4]],
+  count: 0
+}
+
+let twins = {
+  name: "The Twins",
+  traits: [evidence[0], evidence[1], evidence[2]],
+  count: 0
+}
+
+let ghosts = [banshee, demon, jinn, mare, oni, phantom, poltergeist, revenant, shade, spirit, wraith, yurei, hantu, yokai, goryo, myling, obake, onryo, raiju, twins]
 
 
 // Take evidence array of 0 to 3 objects, return possibilities
@@ -309,9 +333,11 @@ function loadCount() {
     ghostsCaught = JSON.parse(localStorage.getItem('phasmoChecklistCount'))
     let i = 0
     ghostsCaught.forEach(entry => {
-      ghosts[i].count = entry
-      updateCount()
-      i++
+      if (entry != null) {
+        ghosts[i].count = entry
+        updateCount()
+        i++
+      }
     })
   }
 }
