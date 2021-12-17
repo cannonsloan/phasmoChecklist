@@ -122,7 +122,13 @@ let twins = {
   count: 0
 }
 
-let ghosts = [banshee, demon, jinn, mare, oni, phantom, poltergeist, revenant, shade, spirit, wraith, yurei, hantu, yokai, goryo, myling, obake, onryo, raiju, twins]
+let mimic = {
+  name: "Mimic",
+  traits: [evidence[2], evidence[5], evidence[1]],
+  count: 0
+}
+
+let ghosts = [banshee, demon, jinn, mare, oni, phantom, poltergeist, revenant, shade, spirit, wraith, yurei, hantu, yokai, goryo, myling, obake, onryo, raiju, twins, mimic]
 
 
 // Take evidence array of 0 to 3 objects, return possibilities
